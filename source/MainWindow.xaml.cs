@@ -29,13 +29,6 @@ namespace LenovoController
             timer.Tick += OnUpdate;
             timer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL);
             timer.Start();
-
-            // GetState();
-        }
-
-        private void GetState()
-        {
-            Status.Text = _batteryFeature.GetState().ToString();
         }
 
         private int GetBatteryPercent()
