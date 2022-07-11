@@ -31,7 +31,7 @@ namespace LenovoController
             timer.Start();
         }
 
-        private int GetBatteryPercent()
+        private int GetBatteryPercentage()
         {
             int percent = -1;
             foreach (ManagementBaseObject battery in _wmi.GetInstances())
@@ -47,7 +47,7 @@ namespace LenovoController
 
         private void Update()
         {
-            ChargeState.Text = GetBatteryPercent().ToString();
+            ChargeState.Text = GetBatteryPercentage().ToString();
         }
 
         private void OnStartStop(object sender, RoutedEventArgs e)
