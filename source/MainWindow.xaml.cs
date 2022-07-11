@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management;
 using System.Windows;
+using System.Windows.Threading;
 using LenovoController.Features;
 
 namespace LenovoController
@@ -11,7 +12,8 @@ namespace LenovoController
     public partial class MainWindow : Window
     {
 
-        private readonly ManagementClass wmi;
+        private const int UPDATE_INTERVAL = 100;
+        private readonly ManagementClass _wmi;
         private readonly BatteryFeature _batteryFeature = new BatteryFeature();
         private bool _isRunning;
 
@@ -21,9 +23,14 @@ namespace LenovoController
 
             // mainWindow.Title += $" v{AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Version}";
 
-            wmi = new ManagementClass("Win32_Battery");
+            _wmi = new ManagementClass("Win32_Battery");
 
-            GetState();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += OnUpdate;
+            timer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL);
+            timer.Start();
+
+            // GetState();
         }
 
         private void GetState()
@@ -34,10 +41,20 @@ namespace LenovoController
         private int GetBatteryPercent()
         {
             int percent = -1;
-            foreach (ManagementBaseObject battery in wmi.GetInstances())
+            foreach (ManagementBaseObject battery in _wmi.GetInstances())
                 percent = Convert.ToInt16(battery["EstimatedChargeRemaining"]);
 
             return percent;
+        }
+
+        private void OnUpdate(object sender, EventArgs eventArgs)
+        {
+            Update();
+        }
+
+        private void Update()
+        {
+            ChargeState.Text = GetBatteryPercent().ToString();
         }
 
         private void OnStartStop(object sender, RoutedEventArgs e)
