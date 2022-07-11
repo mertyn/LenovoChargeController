@@ -12,7 +12,7 @@ namespace LenovoController
     {
 
         private readonly ManagementClass wmi;
-        private readonly PowerModeFeature _powerModeFeature = new PowerModeFeature();
+        private readonly BatteryFeature _batteryFeature = new BatteryFeature();
         private bool _isRunning;
 
         public MainWindow()
@@ -23,6 +23,12 @@ namespace LenovoController
 
             wmi = new ManagementClass("Win32_Battery");
 
+            GetState();
+        }
+
+        private void GetState()
+        {
+            Status.Text = ((int)_batteryFeature.GetState()).ToString();
         }
 
         private int GetBatteryPercent()
