@@ -28,7 +28,7 @@ namespace LenovoController
 
         private void GetState()
         {
-            Status.Text = ((int)_batteryFeature.GetState()).ToString();
+            Status.Text = _batteryFeature.GetState().ToString();
         }
 
         private int GetBatteryPercent()
