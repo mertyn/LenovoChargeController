@@ -48,22 +48,22 @@ namespace LenovoController
 
             ChargeState.Text = batteryPercentage.ToString();
 
-            if (state == BatteryState.Conservation)
+            bool isIdle = state == BatteryState.Conservation;
+
+            ChargeGoal.IsEnabled = isIdle;
+            RadioGroupMode.IsEnabled = isIdle;
+            StartStop.Content = isIdle ? "Start" : "Stop";
+
+            if (!isIdle)
             {
-                StartStop.Content = "Start";
-                Status.Text = "Idle";
-                ChargeGoal.IsEnabled = true;
-            }
-            else
-            {
-                StartStop.Content = "Stop";
                 Status.Text = state == BatteryState.RapidCharge ? "Fast charging..." : "Charging...";
-                ChargeGoal.IsEnabled = false;
 
                 // update battery mode
                 if (batteryPercentage >= _chargeGoal)
                     _batteryFeature.SetState(BatteryState.Conservation);
             }
+            else
+                Status.Text = "Idle";
         }
 
         private void OnStartStop(object sender, RoutedEventArgs e)
