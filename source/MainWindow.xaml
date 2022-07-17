@@ -18,10 +18,12 @@
             <TextBox Name="ChargeGoal" Text="80" TextAlignment="Right"></TextBox>
             <TextBlock>%</TextBlock>
         </StackPanel>
-        <StackPanel Margin="10">
-            <RadioButton IsChecked="True">Normal Charge</RadioButton>
-            <RadioButton>Rapid Charge</RadioButton>
-        </StackPanel>
+        <GroupBox Header="Charging mode" Margin="10" Name="RadioGroupMode">
+            <StackPanel>
+                <RadioButton IsChecked="True" Name="RadioNormal" Content="Normal"/>
+                <RadioButton Content="Rapid" Name="RadioRapid"/>
+            </StackPanel>
+        </GroupBox>
         <StackPanel Orientation="Horizontal">
             <TextBlock>Status:&#160;</TextBlock>
             <TextBlock Name="Status">Idle</TextBlock>
