@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Management;
 using System.Threading.Tasks;
 using System.Windows;
@@ -94,6 +95,11 @@ namespace LenovoController
             _batteryFeature.SetState(_batteryFeature.GetState() == BatteryState.Conservation
                 ? _chargeMode
                 : BatteryState.Conservation);
+        }
+
+        private void OnClose(object sender, CancelEventArgs e)
+        {
+            _batteryFeature.SetState(BatteryState.Conservation);
         }
 
     }

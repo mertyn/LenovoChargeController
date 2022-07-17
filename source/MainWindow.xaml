@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:LenovoController"
         mc:Ignorable="d"
         Title="Charge Controller" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" x:Name="mainWindow"
-        FontSize="14">
+        FontSize="14"
+        Closing="OnClose">
     <StackPanel Margin="15">
         <StackPanel Orientation="Horizontal">
 
