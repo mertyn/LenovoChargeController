@@ -15,7 +15,7 @@ namespace LenovoController
         private const int UPDATE_INTERVAL = 100;
         private readonly ManagementClass _wmi;
         private readonly BatteryFeature _batteryFeature = new BatteryFeature();
-        private bool _isRunning;
+        private int _chargeGoal;
 
         public MainWindow()
         {
@@ -42,19 +42,44 @@ namespace LenovoController
 
         private void OnUpdate(object sender, EventArgs eventArgs)
         {
-            Update();
-        }
+            // update displays
+            int batteryPercentage = GetBatteryPercentage();
+            BatteryState state = _batteryFeature.GetState();
 
-        private void Update()
-        {
-            ChargeState.Text = GetBatteryPercentage().ToString();
+            ChargeState.Text = batteryPercentage.ToString();
+
+            if (state == BatteryState.Conservation)
+            {
+                StartStop.Content = "Start";
+                Status.Text = "Idle";
+                ChargeGoal.IsEnabled = true;
+            }
+            else
+            {
+                StartStop.Content = "Stop";
+                Status.Text = state == BatteryState.RapidCharge ? "Fast charging..." : "Charging...";
+                ChargeGoal.IsEnabled = false;
+
+                // update battery mode
+                if (batteryPercentage >= _chargeGoal)
+                    _batteryFeature.SetState(BatteryState.Conservation);
+            }
         }
 
         private void OnStartStop(object sender, RoutedEventArgs e)
         {
-            _isRunning = !_isRunning;
+            if (!int.TryParse(ChargeGoal.Text, out _chargeGoal))
+            {
+                ChargeGoal.Text = "0";
+                _chargeGoal = 0;
+            }
 
-            StartStop.Content = _isRunning ? "Stop" : "Start";
+            if (_batteryFeature.GetState() == BatteryState.Conservation)
+            {
+                _batteryFeature.SetState(BatteryState.Normal);
+            }
+            else
+                _batteryFeature.SetState(BatteryState.Conservation);
         }
 
     }
