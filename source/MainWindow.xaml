@@ -30,7 +30,7 @@
                     <TextBox Name="ChargeGoal" Text="80" TextAlignment="Right"></TextBox>
                     <TextBlock>%</TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="5">
+                <StackPanel Margin="5">
                     <TextBlock>Status:&#160;</TextBlock>
                     <TextBlock Name="Status">Idle</TextBlock>
                 </StackPanel>
