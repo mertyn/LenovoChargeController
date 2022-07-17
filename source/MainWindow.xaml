@@ -5,29 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LenovoController"
         mc:Ignorable="d"
-        Title="Lenovo Controller" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" x:Name="mainWindow"
+        Title="Charge Controller" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" x:Name="mainWindow"
         FontSize="14">
-    <StackPanel Margin="25">
-        <StackPanel Orientation="Horizontal" Margin="5">
-            <TextBlock>Charge to:&#160;</TextBlock>
-            <TextBox Name="ChargeGoal" Text="80" TextAlignment="Right"></TextBox>
-            <TextBlock>%</TextBlock>
-        </StackPanel>
-        <GroupBox Header="Charging mode" Margin="5" Name="RadioGroupMode" IsEnabled="False">
-            <StackPanel>
-                <RadioButton IsChecked="True" Name="RadioNormal" Content="Normal" Checked="OnNormalChecked"/>
-                <RadioButton Content="Rapid" Name="RadioRapid" Checked="OnRapidChecked"/>
+    <StackPanel Margin="15">
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock>Current charge:&#160;</TextBlock>
+                    <TextBlock Name="ChargeState">69</TextBlock>
+                    <TextBlock>%</TextBlock>
+                </StackPanel>
+                <GroupBox Header="Charging mode" Margin="5" Name="RadioGroupMode" IsEnabled="False">
+                    <StackPanel>
+                        <RadioButton IsChecked="True" Name="RadioNormal" Content="Normal" Checked="OnNormalChecked"/>
+                        <RadioButton Content="Rapid" Name="RadioRapid" Checked="OnRapidChecked"/>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
-        </GroupBox>
-        <StackPanel Orientation="Horizontal" Margin="5">
-            <TextBlock>Status:&#160;</TextBlock>
-            <TextBlock Name="Status">Idle</TextBlock>
+
+            <StackPanel Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock>Charge to:&#160;</TextBlock>
+                    <TextBox Name="ChargeGoal" Text="80" TextAlignment="Right"></TextBox>
+                    <TextBlock>%</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock>Status:&#160;</TextBlock>
+                    <TextBlock Name="Status">Idle</TextBlock>
+                </StackPanel>
+            </StackPanel>
+
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="5">
-            <TextBlock>Current charge:&#160;</TextBlock>
-            <TextBlock Name="ChargeState">69</TextBlock>
-            <TextBlock>%</TextBlock>
-        </StackPanel>
-        <Button Name="StartStop" Click="OnStartStop">Start</Button>
+
+        <Button Name="StartStop" Width="100" Height="35" Click="OnStartStop">Start</Button>
     </StackPanel>
 </Window>
