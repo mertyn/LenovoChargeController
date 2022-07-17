@@ -15,8 +15,8 @@
         </StackPanel>
         <GroupBox Header="Charging mode" Margin="5" Name="RadioGroupMode" IsEnabled="False">
             <StackPanel>
-                <RadioButton IsChecked="True" Name="RadioNormal" Content="Normal"/>
-                <RadioButton Content="Rapid" Name="RadioRapid"/>
+                <RadioButton IsChecked="True" Name="RadioNormal" Content="Normal" Checked="OnNormalChecked"/>
+                <RadioButton Content="Rapid" Name="RadioRapid" Checked="OnRapidChecked"/>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" Margin="5">

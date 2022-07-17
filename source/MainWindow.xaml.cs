@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using LenovoController.Features;
 
@@ -13,8 +14,11 @@ namespace LenovoController
     {
 
         private const int UPDATE_INTERVAL = 100;
+
         private readonly ManagementClass _wmi;
         private readonly BatteryFeature _batteryFeature = new BatteryFeature();
+
+        private BatteryState _chargeMode = BatteryState.Normal;
         private int _chargeGoal;
 
         public MainWindow()
@@ -66,6 +70,16 @@ namespace LenovoController
                 Status.Text = "Idle";
         }
 
+        private void OnNormalChecked(object sender, RoutedEventArgs e)
+        {
+            _chargeMode = BatteryState.Normal;
+        }
+
+        private void OnRapidChecked(object sender, RoutedEventArgs e)
+        {
+            _chargeMode = BatteryState.RapidCharge;
+        }
+
         private void OnStartStop(object sender, RoutedEventArgs e)
         {
             if (!int.TryParse(ChargeGoal.Text, out _chargeGoal))
@@ -74,12 +88,9 @@ namespace LenovoController
                 _chargeGoal = 0;
             }
 
-            if (_batteryFeature.GetState() == BatteryState.Conservation)
-            {
-                _batteryFeature.SetState(BatteryState.Normal);
-            }
-            else
-                _batteryFeature.SetState(BatteryState.Conservation);
+            _batteryFeature.SetState(_batteryFeature.GetState() == BatteryState.Conservation
+                ? _chargeMode
+                : BatteryState.Conservation);
         }
 
     }
