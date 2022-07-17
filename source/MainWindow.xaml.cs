@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using LenovoController.Features;
 
@@ -33,6 +33,9 @@ namespace LenovoController
             timer.Tick += OnUpdate;
             timer.Interval = new TimeSpan(0, 0, 0, 0, UPDATE_INTERVAL);
             timer.Start();
+
+            // start charging
+            OnStartStop(null, null);
         }
 
         private int GetBatteryPercentage()
